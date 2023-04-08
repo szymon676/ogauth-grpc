@@ -1,0 +1,28 @@
+syntax = "proto3";
+option go_package = "github.com/szymon676/oggrpcscylla/pb-gen";
+
+service AuthService {
+    rpc HandleRegister(RegisterRequest) returns (RegisterResponse);
+    rpc HandleLogin(LoginRequest) returns (LoginResponse);
+}
+
+message RegisterRequest {
+    int64 id = 1;
+    string username = 2;
+    string password = 3;
+    string email = 4;
+    uint32 age = 5;
+}
+
+message RegisterResponse {
+    string message = 1;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string token = 1;
+}
