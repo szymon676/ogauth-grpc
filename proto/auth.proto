@@ -1,5 +1,5 @@
 syntax = "proto3";
-option go_package = "github.com/szymon676/oggrpcscylla/pb-gen";
+option go_package = "github.com/szymon676/oggrpcscylla/proto";
 
 service AuthService {
     rpc HandleRegister(RegisterRequest) returns (RegisterResponse);
@@ -7,11 +7,9 @@ service AuthService {
 }
 
 message RegisterRequest {
-    int64 id = 1;
-    string username = 2;
-    string password = 3;
-    string email = 4;
-    uint32 age = 5;
+    string username = 1;
+    string password = 2;
+    string email = 3;
 }
 
 message RegisterResponse {

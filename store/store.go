@@ -1,3 +1,9 @@
 package store
 
-type Store interface{}
+import (
+	"github.com/szymon676/ogauth-grpc/proto"
+)
+
+type Store interface {
+	SaveUser(user *proto.RegisterRequest) error
+}
