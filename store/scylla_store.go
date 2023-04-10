@@ -7,7 +7,7 @@ import (
 	"github.com/gocql/gocql"
 	"github.com/google/uuid"
 	"github.com/scylladb/gocqlx/v2"
-	"github.com/szymon676/ogauth-grpc/proto"
+	"github.com/szymon676/ogauth-grpc/types"
 )
 
 type ScyllaStore struct {
@@ -39,7 +39,7 @@ func NewScyllaStore() *ScyllaStore {
 	return &ScyllaStore{cluster: cluster}
 }
 
-func (s *ScyllaStore) SaveUser(user *proto.RegisterRequest) error {
+func (s *ScyllaStore) SaveUser(user types.User) error {
 	session, err := gocqlx.WrapSession(s.cluster.CreateSession())
 	if err != nil {
 		return err

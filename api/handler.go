@@ -4,38 +4,25 @@ import (
 	"context"
 
 	"github.com/szymon676/ogauth-grpc/proto"
-	"github.com/szymon676/ogauth-grpc/store"
-	"github.com/szymon676/ogauth-grpc/validators"
+	"github.com/szymon676/ogauth-grpc/service"
 )
 
 type AuthServer struct {
 	proto.UnimplementedAuthServiceServer
-	store store.Store
+	service *service.UserService
 }
 
-func NewAuthServer(store store.Store) *AuthServer {
+func NewAuthServer(service *service.UserService) *AuthServer {
 	return &AuthServer{
-		store: store,
+		service: service,
 	}
 }
 
 func (s AuthServer) HandleRegister(ctx context.Context, req *proto.RegisterRequest) (*proto.RegisterResponse, error) {
-	err := validators.ValidateRegisterReq(req)
+	err := s.service.RegisterUser(req)
 	if err != nil {
 		return &proto.RegisterResponse{
-			Message: err.Error(),
-		}, err
-	}
-	correctedReq, err := validators.CorrectReq(req)
-	if err != nil {
-		return &proto.RegisterResponse{
-			Message: err.Error(),
-		}, err
-	}
-	err = s.store.SaveUser(correctedReq)
-	if err != nil {
-		return &proto.RegisterResponse{
-			Message: err.Error(),
+			Message: "user registration failed ;c",
 		}, err
 	}
 	return &proto.RegisterResponse{

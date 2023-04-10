@@ -6,6 +6,7 @@ import (
 	"net"
 
 	"github.com/szymon676/ogauth-grpc/proto"
+	"github.com/szymon676/ogauth-grpc/service"
 	"github.com/szymon676/ogauth-grpc/store"
 	"google.golang.org/grpc"
 )
@@ -17,7 +18,8 @@ func NewServer(port string) {
 	}
 
 	store := store.NewScyllaStore()
-	as := NewAuthServer(store)
+	service := service.NewUserService(store)
+	as := NewAuthServer(service)
 	grpcServer := grpc.NewServer()
 	proto.RegisterAuthServiceServer(grpcServer, as)
 
