@@ -2,3 +2,4 @@
 - Go
 - gRPC
 - ScyllaDB
+- jwt
